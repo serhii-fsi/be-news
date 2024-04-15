@@ -7,7 +7,7 @@
     - Add config `PGDATABASE=test_database_name` with your `test_database_name`
 
 ## 2. Create SQL file
-- Create `./db/setup.sql` using this template where you need to set your `database_name` and `test_database_name`
+- Create `./src/db/setup.sql` using this template where you need to set your `database_name` and `test_database_name`
 ```
     DROP DATABASE IF EXISTS test_database_name;
     DROP DATABASE IF EXISTS database_name;
