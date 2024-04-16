@@ -24,4 +24,24 @@
 ## 5. Seed DB
 - `npm run seed`
 
+<br/><br/>
+
+# Contracts
+## Api
+- Server should return errors wrapped in error object.
+    Example `{ error: { status: 404, msg: '404 Not Found' } }`  
+
+<br/><br/>
+
+# Tests style guide
+- Use Spotify approach - https://github.com/spotify/should-up
+
+<br/><br/>
+
+# Style guide
+(Example: https://google.github.io/styleguide/jsguide.html)
+
+## String literals
+- Use `'` for "technical" strings like `.get('/api/treasures')` etc.
+- Use `"` for "text" strings which could contain `'` like `test("does't return ...", `
 
