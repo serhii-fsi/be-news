@@ -12,6 +12,7 @@ app.use(express.json());
 
 
 // Errors
+app.all('*', require('./middlewares/errors/all-404')); // All unknown paths
 
 
 module.exports = app;
