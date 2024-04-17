@@ -22,6 +22,7 @@ app.use(express.json());
 // Routes
 require('./routes/api-v1/topics');
 require('./routes/api-v1/api');
+require('./routes/api-v1/articles');
 
 
 // Errors
