@@ -7,7 +7,7 @@ class AppError extends Error {
     #url;
 
     constructor(config = {}) {
-        const msg = config.msg ?? 'Server Error';
+        const msg = config.msg ?? 'App Error';
         super(msg);
         this.setCode(config.code ?? 500);
         this.setMsg(msg);

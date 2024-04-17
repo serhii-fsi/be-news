@@ -8,12 +8,12 @@ class ModelError extends Error {
     #psqlError;
 
     constructor(config = {}) {
-        const msg = config.msg ?? 'Server Error';
+        const msg = config.msg ?? 'Model Error';
         super(msg);
         this.setCode(config.code ?? 500);
         this.setMsg(msg);
         this.setPsqlError(config.psql);
-        if (isLogging) this.log();
+        if (config.log ?? true) this.log();
     }
 
     static setLogger(Logger) {
@@ -50,8 +50,23 @@ class ModelError extends Error {
 
     toAppError() {
         // Place for converting ModelError to AppError
-        const appError = new this.constructor.AppError({log: false});
-        appError.setCode(500);
+        const AppErrorClass = this.constructor.AppError;
+        let appError;
+        const psqlError = this.getPsqlError();
+
+        if (psqlError) {
+            const code = psqlError.code;
+            if (code === '22P02') {
+                // Invalid input syntax for type integer: "not_a_digit"
+                appError = new AppErrorClass({ code: 400, msg: '400 Bad Request', log: false });
+            } else {
+                // Unexpected error
+                appError = new AppErrorClass({ code: 500, msg: 'Unexpected Error', log: true });
+            }
+        } else {
+
+        }
+
         return appError;
     }
 

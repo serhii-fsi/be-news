@@ -38,12 +38,25 @@
     - [x] Passing tests
 
 
+# Task 4 - CORE: GET /api/articles/:article_id
+- Integration tests for endpoint `GET /api/articles/:article_id`
+    - [x] Test for correct and valid article_id
+    - [x] Test for incorrect but valid article_id
+    - [x] Test for invalid article_id
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Passing tests
+- [x] Some error handling improvements
+- [x] Jest auto clear console setup
 
 
 # Improvements
 - [ ] Create 2 errors tables private and public for AppError. Private has more information, 
     public has limited information for clients. Private table could work as a guideline.
 - [ ] Create errors table for ModelError to convert ModelErrors to AppErrors.
+    Developer should choose needed error preset from some list or add a new one in the list before.   
 - [ ] Do we need JSDoc?
 - [ ] Custom errors .toString() method to avoid splitting console output for the same error
 - [ ] Find Log & Error library if necessary
