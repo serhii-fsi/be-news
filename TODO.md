@@ -31,7 +31,7 @@
 
 
 # Task 3 - CORE: GET /api
-- [!] Integration tests for endpoint `GET /api`
+- [x] Integration tests for endpoint `GET /api`
 - Implementing and passing tests
     - [x] Route
     - [x] Controller
