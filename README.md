@@ -24,4 +24,34 @@
 ## 5. Seed DB
 - `npm run seed`
 
+<br/><br/>
 
+# Contracts
+## Api
+- Server should return errors wrapped in error object.
+    Example `{ error: { status: 404, msg: '404 Not Found' } }`
+- Server should return data wrapped in named object.
+    Example `{ topics: [ { description: 'The man, the Mitch, the legend', slug: 'mitch' }, ... ] }`
+
+<br/><br/>
+
+# Tests style guide
+- Use Spotify approach - https://github.com/spotify/should-up
+
+<br/><br/>
+
+# Style guide
+(Example: https://google.github.io/styleguide/jsguide.html)
+
+## String literals
+- Use `'` for "technical" strings like `.get('/api/treasures')` etc.
+- Use `"` for "text" strings which could contain `'` like `test("does't return ...", `
+
+## SQL
+- Avoid `SELECT * FROM topics;` use `SELECT slug, description FROM topics;`
+    - Reasons:
+        - Maintenance Issues:
+            - Schema Changes: If the table schema changes, your application might break.
+            - Model Compatibility: If you’re using an ORM (Object-Relational Mapping), changes to the table structure can impact your models.
+        - Security Risks:
+            - Sensitive Data: If new sensitive columns are added, they’ll be included.
