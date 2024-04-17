@@ -30,6 +30,12 @@
 - [x] Code refactoring
 
 
+# Task 3 - CORE: GET /api
+- [x] Integration tests for endpoint `GET /api`
+- Implementing and passing tests
+    - [x] Route
+    - [x] Controller
+    - [x] Passing tests
 
 
 
@@ -41,4 +47,6 @@
 - [ ] Do we need JSDoc?
 - [ ] Custom errors .toString() method to avoid splitting console output for the same error
 - [ ] Find Log & Error library if necessary
+- [ ] handle-app-errors.js - how can we improve "Critical Error!" part, 
+    should we wrap it in AppError and how?
 
