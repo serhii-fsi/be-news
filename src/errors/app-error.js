@@ -4,12 +4,14 @@ class AppError extends Error {
     static Logger;
     #code;
     #msg;
+    #url;
 
     constructor(config = {}) {
         const msg = config.msg ?? 'Server Error';
         super(msg);
         this.setCode(config.code ?? 500);
         this.setMsg(msg);
+        this.setUrl(config.url);
         if(config.log ?? true) this.log();
     }
 
@@ -39,7 +41,16 @@ class AppError extends Error {
         return this.#msg;
     }
 
+    setUrl(url) {
+        this.#url = url;
+    }
+
+    getUrl() {
+        return this.#url;
+    }
+
     log() {
+        if (this.getUrl()) this.constructor.Logger.log(`URL: ${this.getUrl()}`);
         this.constructor.Logger.logError(this);
     }
 

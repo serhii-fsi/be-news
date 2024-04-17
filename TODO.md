@@ -39,5 +39,6 @@
     public has limited information for clients. Private table could work as a guideline.
 - [ ] Create errors table for ModelError to convert ModelErrors to AppErrors.
 - [ ] Do we need JSDoc?
+- [ ] Custom errors .toString() method to avoid splitting console output for the same error
 - [ ] Find Log & Error library if necessary
 
