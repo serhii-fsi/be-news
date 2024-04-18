@@ -1,18 +1,19 @@
-const request = require('supertest');
-const app = require('../../../src/app');
 const db = require('../../../src/db/connection');
+const app = require('../../../src/app');
+const request = require('supertest');
 const seed = require('../../../src/db/seeds/seed');
 const testData = require('../../../src/db/data/test-data/index');
 const AppError = require('../../../src/errors/app-error');
 
 
-beforeEach(async () => {
-    await seed(testData);
+beforeEach(() => {
+    return seed(testData);
 });
 
 afterAll(() => {
     return db.end();
 });
+
 
 describe("GET /api/non-existent", () => {
 
