@@ -28,6 +28,7 @@
 - [x] Middleware for app errors
 - [x] Integration tests for non-existent endpoint `GET /api/non_existent` returns `404`
 - [x] Code refactoring
+- [x] Add a description of this endpoint
 
 
 # Task 3 - CORE: GET /api
@@ -36,6 +37,7 @@
     - [x] Route
     - [x] Controller
     - [x] Passing tests
+- [x] Add a description of this endpoint
 
 
 # Task 4 - CORE: GET /api/articles/:article_id
@@ -50,6 +52,7 @@
 - [x] Passing tests
 - [x] Some error handling improvements
 - [x] Jest auto clear console setup
+- [ ] Add a description of this endpoint
 
 
 # Task 5 - CORE: GET /api/articles
@@ -62,6 +65,26 @@
     - [x] Controller
     - [x] Model
 - [x] Passing tests
+- [x] Add a description of this endpoint
+
+
+# Task 6 - CORE: GET /api/articles/:article_id/comments
+- [x] "Jest-sorted" setup
+- Integration tests for endpoint `GET /api/articles/:article_id/comments`
+    - [x] Returns all comments for the 1st article with the correct prop types,
+        checks comments number
+    - [x] Comments should be served with the most recent comments first
+    - [x] Fields of the 2nd comment should be the same
+    - [x] Returns an empty array for the 2nd article which doesn't have comments 
+    - [x] Returns 404 error for incorrect but valid article_id
+    - [x] Returns 400 error for invalid article_id 
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Tests fixes
+- [x] Passing tests
+- [x] Add a description of this endpoint
 
 
 # Bugs

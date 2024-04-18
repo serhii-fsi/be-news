@@ -1,5 +1,4 @@
 const db = require('../db/connection');
-const { log } = require('../loggers/logger');
 const ModelError = require('./errors/model-error');
 
 
