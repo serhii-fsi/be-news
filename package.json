@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "setup-dbs": "psql -f ./src/db/setup.sql",
-    "seed": "node ./src/db/seeds/run-seed.js",
-    "test": "clear & jest",
-    "dev": "nodemon ./src/server.js",
+    "seed-dev": "NODE_ENV=development node ./src/db/seeds/run-seed.js",
+    "seed-test": "NODE_ENV=test node ./src/db/seeds/run-seed.js",
+    "test": "clear & NODE_ENV=test jest",
+    "dev": "NODE_ENV=development nodemon ./src/server.js",
     "prepare": "husky install"
   },
   "repository": {

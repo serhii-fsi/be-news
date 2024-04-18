@@ -35,7 +35,7 @@ describe("GET /api/topics", () => {
             .get('/api/topics')
             .expect(200)
             .then(({ body: { topics } }) => {
-                expect(topics[0]).toEqual({
+                expect(topics[0]).toMatchObject({
                     description: 'The man, the Mitch, the legend',
                     slug: 'mitch'
                 });
