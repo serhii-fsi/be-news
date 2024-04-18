@@ -52,6 +52,24 @@
 - [x] Jest auto clear console setup
 
 
+# Task 5 - CORE: GET /api/articles
+- Integration tests for endpoint `GET /api/articles`
+    - [x] Returns all articles, checks articles number and fields types
+    - [x] Fields of an article with id 1 must be the same
+    - [x] Articles should be sorted by date
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Passing tests
+
+
+# Bugs
+- Psql pg-format timezone bug
+    - [ ] Create PoC test
+    - [ ] Fix the bug
+    - [ ] Uncomment and pass test
+
 # Improvements
 - [ ] Create 2 errors tables private and public for AppError. Private has more information, 
     public has limited information for clients. Private table could work as a guideline.
