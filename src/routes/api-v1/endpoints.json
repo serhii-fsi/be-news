@@ -51,5 +51,19 @@
         }
       ]
     }
+  },
+  "CORE: POST /api/articles/:article_id/comments": {
+    "description": "adds a comment for an article and responds with the posted comment",
+    "queries": [],
+    "exampleResponse": {
+      "comment": {
+        "comment_id": 19,
+        "body": "In coding, simplicity is the ultimate sophistication.",
+        "article_id": 3,
+        "author": "butter_bridge",
+        "votes": 0,
+        "created_at": "2024-04-18T22:49:51.269Z"
+      }
+    }
   }
 }

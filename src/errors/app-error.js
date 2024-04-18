@@ -12,7 +12,7 @@ class AppError extends Error {
         this.setCode(config.code ?? 500);
         this.setMsg(msg);
         this.setUrl(config.url);
-        if(config.log ?? true) this.log();
+        if (config.log ?? true) this.log();
     }
 
     static setLogger(Logger) {
@@ -50,8 +50,15 @@ class AppError extends Error {
     }
 
     log() {
-        if (this.getUrl()) this.constructor.Logger.log(`URL: ${this.getUrl()}`);
-        this.constructor.Logger.logError(this);
+        const logObj = {
+            name: this.name,
+            message: this.message,
+            stack: this.stack.split("\n    at ")[1],
+        };
+
+        this.getUrl() && (logObj.url = this.getUrl());
+
+        this.constructor.Logger.logError(logObj);
     }
 
     exportForClient() {

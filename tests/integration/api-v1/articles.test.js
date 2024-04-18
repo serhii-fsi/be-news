@@ -1,14 +1,14 @@
-const request = require('supertest');
-const app = require('../../../src/app');
 const db = require('../../../src/db/connection');
+const app = require('../../../src/app');
+const request = require('supertest');
 const seed = require('../../../src/db/seeds/seed');
 const testData = require('../../../src/db/data/test-data/index');
 const { articleData, commentData, topicData, userData } = testData;
 const AppError = require('../../../src/errors/app-error');
 
 
-beforeEach(async () => {
-    await seed(testData);
+beforeEach(() => {
+    return seed(testData);
 });
 
 afterAll(() => {
@@ -234,3 +234,56 @@ describe("GET /api/articles/:article_id/comments", () => {
     });
 
 });
+
+
+describe("POST /api/articles/:article_id/comments", () => {
+
+    const error404 = (new AppError({ code: 404, msg: '404 Not Found', log: false })).exportForClient();
+    const error400 = (new AppError({ code: 400, msg: '400 Bad Request', log: false })).exportForClient();
+
+    test("returns 404 error when article_id is number but does not exist", () => {
+        return request(app).post('/api/articles/333/comments')
+            .send({ username: 'butter_bridge', body: 'In coding, simplicity is the ultimate sophistication.' })
+            .expect(404)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error404); });
+    });
+
+    test("returns 400 error when article_id not a number", () => {
+        return request(app).post('/api/articles/not_a_number/comments')
+            .send({ username: 'butter_bridge', body: 'In coding, simplicity is the ultimate sophistication.' })
+            .expect(400)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error400); });
+    });
+
+    test("returns 404 error for username which does not exist", () => {
+        return request(app).post('/api/articles/3/comments')
+            .send({ username: 'wrong_username', body: 'In coding, simplicity is the ultimate sophistication.' })
+            .expect(404)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error404); });
+    });
+
+    test("returns 400 error for malformed body", () => {
+        return request(app).post('/api/articles/3/comments')
+            .send({ username: 'butter_bridge', malformed_body: 'In coding, simplicity is the ultimate sophistication.' })
+            .expect(400)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error400); });
+    });
+
+    test("returns the posted comment with the correct props types and values", () => {
+        return request(app).post('/api/articles/3/comments')
+            .send({ username: 'butter_bridge', body: 'In coding, simplicity is the ultimate sophistication.' })
+            .expect(201)
+            .then(({ body: { comment } }) => {
+                expect(comment).toMatchObject({
+                    comment_id: 19,
+                    votes: 0,
+                    created_at: expect.any(String),
+                    author: 'butter_bridge',
+                    body: 'In coding, simplicity is the ultimate sophistication.',
+                    article_id: 3,
+                });
+            });
+    });
+
+});
+

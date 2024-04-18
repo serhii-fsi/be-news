@@ -87,6 +87,23 @@
 - [x] Add a description of this endpoint
 
 
+# Task 7 - CORE: POST /api/articles/:article_id/comments
+- Integration tests for endpoint `POST /api/articles/:article_id/comments`
+    - [x] Returns 404 error when article_id is number but does not exist
+    - [x] Returns 400 error when article_id not a number
+    - [x] Returns 404 error for username which does not exist
+    - [x] Returns 400 error for malformed body
+    - [x] Returns the posted comment with the correct props types and values
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Fixed an issue with running parallel Jest scripts
+- [x] Passing tests
+- [x] Improved error log output
+- [x] Add a description of this endpoint
+
+
 # Bugs
 - Psql pg-format timezone bug
     - [ ] Create PoC test
@@ -94,6 +111,7 @@
     - [ ] Uncomment and pass test
 
 # Improvements
+- [ ] Avoid duplications, DRY ("fetch-article-existence.js")
 - [ ] Create 2 errors tables private and public for AppError. Private has more information, 
     public has limited information for clients. Private table could work as a guideline.
 - [ ] Create errors table for ModelError to convert ModelErrors to AppErrors.
