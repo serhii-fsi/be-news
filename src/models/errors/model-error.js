@@ -66,6 +66,9 @@ class ModelError extends Error {
                 // Tnsert or update on table "comments" violates foreign key constraint "comments_article_id_fkey"
                 // Key (article_id)=(333) is not present in table "articles"
                 appError = new AppErrorClass({ code: 404, msg: '404 Not Found', log: false });
+            } else if (code === '22003') {
+                // The value is out of range for type integer
+                appError = new AppErrorClass({ code: 400, msg: '400 Bad Request', log: false });
             } else {
                 // Unexpected error
                 appError = new AppErrorClass({ code: 500, msg: 'Unexpected Error', log: true });
@@ -85,7 +88,7 @@ class ModelError extends Error {
         };
 
         const psqlErr = this.getPsqlError();
-        
+
         if (psqlErr) {
             logObj.psql = {};
             psqlErr.code && (logObj.psql.code = psqlErr.code);

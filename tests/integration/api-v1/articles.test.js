@@ -16,6 +16,10 @@ afterAll(() => {
 });
 
 
+const createError404 = () => new AppError({ code: 404, msg: '404 Not Found', log: false }).exportForClient();
+const createError400 = () => new AppError({ code: 400, msg: '400 Bad Request', log: false }).exportForClient();
+
+
 describe("GET /api/articles/:article_id", () => {
 
     test("returns single article when :article_id correct and valid", () => {
@@ -238,35 +242,32 @@ describe("GET /api/articles/:article_id/comments", () => {
 
 describe("POST /api/articles/:article_id/comments", () => {
 
-    const error404 = (new AppError({ code: 404, msg: '404 Not Found', log: false })).exportForClient();
-    const error400 = (new AppError({ code: 400, msg: '400 Bad Request', log: false })).exportForClient();
-
     test("returns 404 error when article_id is number but does not exist", () => {
         return request(app).post('/api/articles/333/comments')
             .send({ username: 'butter_bridge', body: 'In coding, simplicity is the ultimate sophistication.' })
             .expect(404)
-            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error404); });
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError404()); });
     });
 
     test("returns 400 error when article_id not a number", () => {
         return request(app).post('/api/articles/not_a_number/comments')
             .send({ username: 'butter_bridge', body: 'In coding, simplicity is the ultimate sophistication.' })
             .expect(400)
-            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error400); });
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError400()); });
     });
 
     test("returns 404 error for username which does not exist", () => {
         return request(app).post('/api/articles/3/comments')
             .send({ username: 'wrong_username', body: 'In coding, simplicity is the ultimate sophistication.' })
             .expect(404)
-            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error404); });
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError404()); });
     });
 
     test("returns 400 error for malformed body", () => {
         return request(app).post('/api/articles/3/comments')
             .send({ username: 'butter_bridge', malformed_body: 'In coding, simplicity is the ultimate sophistication.' })
             .expect(400)
-            .then(({ body: { error } }) => { expect({ error }).toMatchObject(error400); });
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError400()); });
     });
 
     test("returns the posted comment with the correct props types and values", () => {
@@ -287,3 +288,73 @@ describe("POST /api/articles/:article_id/comments", () => {
 
 });
 
+
+describe("PATCH /api/articles/:article_id", () => {
+
+    test("responds with 200 and the updated article with the correct props types and incremented value", () => {
+        return request(app).patch('/api/articles/1')
+            .send({ inc_votes: 69 })
+            .expect(200)
+            .then(({ body: { article } }) => {
+                expect(article).toMatchObject({
+                    article_id: 1,
+                    title: 'Living in the shadow of a great man',
+                    body: 'I find this existence challenging',
+                    topic: 'mitch',
+                    created_at: '2020-07-09T20:11:00.000Z',
+                    votes: 169,
+                    article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700'
+                });
+            });
+    });
+
+    test("responds with 200 and the updated article with the correct props types and decremented value", () => {
+        return request(app).patch('/api/articles/1')
+            .send({ inc_votes: -69 })
+            .expect(200)
+            .then(({ body: { article } }) => {
+                expect(article).toMatchObject({
+                    votes: 31,
+                });
+            });
+    });
+
+    test("responds with 400 error if inc_votes (INT) is out of range", () => {
+        return request(app).patch('/api/articles/2')
+            .send({ inc_votes: 0x7FFFFFFF + 1 })
+            .expect(400)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError400()); });
+    });
+
+    test("responds with 400 error for invalid inc_votes", () => {
+        return request(app).patch('/api/articles/2')
+            .send({ inc_votes: 'invalid_value' })
+            .expect(400)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError400()); });
+    });
+
+    // We can't check for "malformed body" in express because we use express.json() which gives 
+    // an empty object if the json is invalid. We can use .json([options]).
+    // "any required parameters" because in the future this test should work when we need to update other props
+    test("responds with 400 error when any required parameters are not provided", () => {
+        return request(app).patch('/api/articles/2')
+            .send('malformed body')
+            .expect(400)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError400()); });
+    });
+
+    test("responds with 404 error when article_id is number but does not exist", () => {
+        return request(app).patch('/api/articles/333')
+            .send({ inc_votes: 10 })
+            .expect(404)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError404()); });
+    });
+
+    test("Responds with 400 error when article_id not a number", () => {
+        return request(app).patch('/api/articles/not_a_number')
+            .send({ inc_votes: 10 })
+            .expect(400)
+            .then(({ body: { error } }) => { expect({ error }).toMatchObject(createError400()); });
+    });
+
+});

@@ -103,6 +103,25 @@
 - [x] Improved error log output
 - [x] Add a description of this endpoint
 
+- [ ] In insertComment() change "RETURNING *" to  "RETURNING col1, col2, ..."
+
+
+# Task 8 - CORE: PATCH /api/articles/:article_id
+- Integration tests for endpoint `PATCH /api/articles/:article_id`
+    - [x] Responds with 200 and the updated article with the correct props and incremented value
+    - [x] Responds with 200 and the updated article with the correct props and decremented value
+    - [x] Responds with 400 error if inc_votes (INT) is out of range
+    - [x] Responds with 400 error for invalid inc_votes
+    - [x] Responds with 400 error when any required parameters are not provided
+    - [x] Responds with 404 error when article_id is number but does not exist
+    - [x] Responds with 400 error when article_id not a number
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Passing tests
+- [x] Add a description of this endpoint
+
 
 # Bugs
 - Psql pg-format timezone bug
