@@ -123,6 +123,20 @@
 - [x] Add a description of this endpoint
 
 
+# Task 9 - CORE: DELETE /api/comments/:comment_id
+- Integration tests for endpoint `DELETE /api/comments/:comment_id`
+    - [x] Responds with 204 status and no content if deleting was successful 
+    - [x] Responds with 404 error when comment_id is number but does not exist 
+    - [x] Responds with 400 error if comment_id (INT) is out of range
+    - [x] Responds with 400 error when comment_id not a number
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Passing tests
+- [x] Add a description of this endpoint
+
+
 # Bugs
 - Psql pg-format timezone bug
     - [ ] Create PoC test
