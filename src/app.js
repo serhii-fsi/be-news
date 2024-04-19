@@ -23,6 +23,7 @@ app.use(express.json());
 require('./routes/api-v1/topics');
 require('./routes/api-v1/api');
 require('./routes/api-v1/articles');
+require('./routes/api-v1/comments');
 
 
 // Errors
