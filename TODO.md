@@ -137,6 +137,17 @@
 - [x] Add a description of this endpoint
 
 
+# Task 10 - CORE: GET /api/users
+- Integration tests for endpoint `GET /api/users`
+    - [x] Responds with 200 status and all users with correct props
+- Implementation
+    - [x] Route
+    - [x] Controller
+    - [x] Model
+- [x] Passing tests
+- [x] Add a description of this endpoint
+
+
 # Bugs
 - Psql pg-format timezone bug
     - [ ] Create PoC test
