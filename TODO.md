@@ -1,3 +1,6 @@
+# Tasks
+    https://l2c.northcoders.com/courses/be/nc-news
+
 # Checklist before requesting a review
 - [ ] I have performed a self-review of my code
 - [ ] If it is a core feature, I have added thorough tests.
@@ -146,6 +149,28 @@
     - [x] Model
 - [x] Passing tests
 - [x] Add a description of this endpoint
+
+
+# Task 11 - CORE: GET /api/articles (topic query)
+- Integration tests for endpoint `GET /api/articles?topic=)`
+    - [ ] Responds with comments for the 1st article with the correct prop types 
+    - [ ] Responds with 404 error when comment_id is number but does not exist 
+    - [ ] Responds with 400 error if comment_id (INT) is out of range
+    - [ ] Responds with 400 error when comment_id not a number
+
+    - [ ] Returns all comments for the 1st article with the correct prop types,
+        checks comments number
+    - [ ] Comments should be served with the most recent comments first
+    - [ ] Fields of the 2nd comment should be the same
+    - [ ] Returns an empty array for the 2nd article which doesn't have comments 
+    - [ ] Returns 404 error for incorrect but valid article_id
+    - [ ] Returns 400 error for invalid article_id 
+- Implementation
+    - [ ] Route
+    - [ ] Controller
+    - [ ] Model
+- [ ] Passing tests
+- [ ] Add a description of this endpoint
 
 
 # Bugs
