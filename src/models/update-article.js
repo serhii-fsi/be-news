@@ -1,8 +1,7 @@
-const db = require('../db/connection');
-const ModelError = require('./errors/model-error');
+const db = require("../db/connection");
+const ModelError = require("./errors/model-error");
 
-
-const updateArticle = async (articleId, values) => {
+const updateArticle = async (articleId, incVotes) => {
     try {
         const { rows } = await db.query(
             `UPDATE articles
@@ -19,14 +18,13 @@ const updateArticle = async (articleId, values) => {
                     votes,
                     article_img_url
             ;`,
-            [articleId, values.incVotes]
+            [articleId, incVotes]
         );
         return rows[0];
     } catch (error) {
-        const modelErr = new ModelError({ psql: error, msg: 'PSQL Error' });
+        const modelErr = new ModelError({ psql: error, msg: "PSQL Error" });
         throw modelErr.toAppError();
     }
 };
-
 
 module.exports = updateArticle;

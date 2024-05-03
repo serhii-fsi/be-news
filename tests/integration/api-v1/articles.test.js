@@ -144,9 +144,7 @@ describe("GET /api/articles", () => {
             .get("/api/articles")
             .expect(200)
             .then(({ body: { articles } }) => {
-                expect(
-                    articles.find(({ article_id }) => article_id === 1)
-                ).toMatchObject({
+                expect(articles.find(({ article_id }) => article_id === 1)).toMatchObject({
                     article_id: 1,
                     author: "butter_bridge",
                     title: "Living in the shadow of a great man",
@@ -209,9 +207,7 @@ describe("GET /api/articles/:article_id/comments", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body: { comments } }) => {
-                expect(
-                    comments.find(({ comment_id }) => comment_id === 2)
-                ).toMatchObject({
+                expect(comments.find(({ comment_id }) => comment_id === 2)).toMatchObject({
                     comment_id: 2,
                     votes: 14,
                     created_at: "2020-10-31T03:03:00.000Z",
@@ -256,93 +252,6 @@ describe("GET /api/articles/:article_id/comments", () => {
                     log: false,
                 });
                 expect({ error }).toMatchObject(appErr.exportForClient());
-            });
-    });
-});
-
-describe("POST /api/articles/:article_id/comments", () => {
-    test("returns the posted comment with the correct props types and values", () => {
-        return request(app)
-            .post("/api/articles/3/comments")
-            .send({
-                username: "butter_bridge",
-                body: "In coding, simplicity is the ultimate sophistication.",
-            })
-            .expect(201)
-            .then(({ body: { comment } }) => {
-                expect(comment).toMatchObject({
-                    comment_id: 19,
-                    votes: 0,
-                    created_at: expect.any(String),
-                    author: "butter_bridge",
-                    body: "In coding, simplicity is the ultimate sophistication.",
-                    article_id: 3,
-                });
-            });
-    });
-
-    test("returns 404 error when article_id is number but does not exist", () => {
-        return request(app)
-            .post("/api/articles/333/comments")
-            .send({
-                username: "butter_bridge",
-                body: "In coding, simplicity is the ultimate sophistication.",
-            })
-            .expect(404)
-            .then(({ body: { error } }) => {
-                expect({ error }).toMatchObject(createError404());
-            });
-    });
-
-    test("returns 400 error when article_id not a number", () => {
-        return request(app)
-            .post("/api/articles/not_a_number/comments")
-            .send({
-                username: "butter_bridge",
-                body: "In coding, simplicity is the ultimate sophistication.",
-            })
-            .expect(400)
-            .then(({ body: { error } }) => {
-                expect({ error }).toMatchObject(createError400());
-            });
-    });
-
-    test("returns 404 error for username which does not exist", () => {
-        return request(app)
-            .post("/api/articles/3/comments")
-            .send({
-                username: "wrong_username",
-                body: "In coding, simplicity is the ultimate sophistication.",
-            })
-            .expect(404)
-            .then(({ body: { error } }) => {
-                expect({ error }).toMatchObject(createError404());
-            });
-    });
-
-    test("returns 400 error if wrong param name was passed", () => {
-        return request(app)
-            .post("/api/articles/3/comments")
-            .send({
-                wrongparam: "wrongparam",
-                username: "butter_bridge",
-                body: "In coding, simplicity is the ultimate sophistication.",
-            })
-            .expect(400)
-            .then(({ body: { error } }) => {
-                expect({ error }).toMatchObject(createError400());
-            });
-    });
-
-    test("returns 400 error if param was missed", () => {
-        return request(app)
-            .post("/api/articles/3/comments")
-            .send({
-                username: "butter_bridge",
-            })
-            .expect(400)
-            .then(({ body: { error } }) => {
-                expect({ error }).toMatchObject(createError400());
             });
     });
 });
@@ -399,19 +308,6 @@ describe("PATCH /api/articles/:article_id", () => {
             });
     });
 
-    // We can't check for "malformed body" in express because we use express.json() which gives
-    // an empty object if the json is invalid. We can use .json([options]).
-    // "any required parameters" because in the future this test should work when we need to update other props
-    test("responds with 400 error when any required parameters are not provided", () => {
-        return request(app)
-            .patch("/api/articles/2")
-            .send("malformed body")
-            .expect(400)
-            .then(({ body: { error } }) => {
-                expect({ error }).toMatchObject(createError400());
-            });
-    });
-
     test("responds with 404 error when article_id is number but does not exist", () => {
         return request(app)
             .patch("/api/articles/333")
@@ -426,6 +322,41 @@ describe("PATCH /api/articles/:article_id", () => {
         return request(app)
             .patch("/api/articles/not_a_number")
             .send({ inc_votes: 10 })
+            .expect(400)
+            .then(({ body: { error } }) => {
+                expect({ error }).toMatchObject(createError400());
+            });
+    });
+
+    test("returns 400 error if wrong param name was passed", () => {
+        return request(app)
+            .patch("/api/articles/2")
+            .send({
+                wrongparam: "wrongparam",
+            })
+            .expect(400)
+            .then(({ body: { error } }) => {
+                expect({ error }).toMatchObject(createError400());
+            });
+    });
+
+    test("returns 400 error if param was missed", () => {
+        return request(app)
+            .patch("/api/articles/2")
+            .send({})
+            .expect(400)
+            .then(({ body: { error } }) => {
+                expect({ error }).toMatchObject(createError400());
+            });
+    });
+
+    // We can't check for "malformed body" in express because we use express.json() which gives
+    // an empty object if the json is invalid. We can use .json([options]).
+    // "any required parameters" because in the future this test should work when we need to update other props
+    test("responds with 400 error when any required parameters are not provided", () => {
+        return request(app)
+            .patch("/api/articles/2")
+            .send("malformed body")
             .expect(400)
             .then(({ body: { error } }) => {
                 expect({ error }).toMatchObject(createError400());

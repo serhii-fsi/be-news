@@ -43,10 +43,6 @@
 # Style guide
 (Example: https://google.github.io/styleguide/jsguide.html)
 
-## String literals
-- Use `'` for "technical" strings like `.get('/api/treasures')` etc.
-- Use `"` for "text" strings which could contain `'` like `test("does't return ...", `
-
 ## SQL
 - Avoid `SELECT * FROM topics;` use `SELECT slug, description FROM topics;`
     - Reasons:
