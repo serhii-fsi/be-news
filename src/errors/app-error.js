@@ -1,13 +1,11 @@
-
 class AppError extends Error {
-
     static Logger;
     #code;
     #msg;
     #url;
 
     constructor(config = {}) {
-        const msg = config.msg ?? 'App Error';
+        const msg = config.msg ?? "App Error";
         super(msg);
         this.setCode(config.code ?? 500);
         this.setMsg(msg);
@@ -28,7 +26,7 @@ class AppError extends Error {
     }
 
     getHttpStatusCode() {
-        // For now this App has the same status codes as http status codes 
+        // For now this App has the same status codes as http status codes
         // but it is different entities and we could use not only http transport
         return this.getCode();
     }
@@ -66,8 +64,6 @@ class AppError extends Error {
         // Avoid including sensitive information that could help to an attacker
         return { error: { status: this.#code, msg: this.#msg } };
     }
-
 }
-
 
 module.exports = AppError;

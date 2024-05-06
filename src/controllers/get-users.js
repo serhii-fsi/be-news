@@ -1,5 +1,4 @@
-const fetchUsers = require('../models/fetch-users');
-
+const fetchUsers = require("../models/fetch-users");
 
 const getUsers = async (req, res, next) => {
     try {
@@ -9,6 +8,5 @@ const getUsers = async (req, res, next) => {
         next(error);
     }
 };
-
 
 module.exports = getUsers;

@@ -1,6 +1,5 @@
-const db = require('../db/connection');
-const ModelError = require('./errors/model-error');
-
+const db = require("../db/connection");
+const ModelError = require("./errors/model-error");
 
 const fetchArticles = async () => {
     try {
@@ -13,14 +12,13 @@ const fetchArticles = async () => {
             LEFT JOIN comments
                 ON articles.article_id = comments.article_id
             GROUP BY articles.article_id
-            ORDER BY articles.created_at DESC;`,
+            ORDER BY articles.created_at DESC;`
         );
         return rows;
     } catch (error) {
-        const modelErr = new ModelError({ psql: error, msg: 'PSQL Error' });
+        const modelErr = new ModelError({ psql: error, msg: "PSQL Error" });
         throw modelErr.toAppError();
     }
 };
-
 
 module.exports = fetchArticles;

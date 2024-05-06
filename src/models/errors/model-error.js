@@ -1,6 +1,4 @@
-
 class ModelError extends Error {
-
     static Logger;
     static AppError;
     #code;
@@ -8,7 +6,7 @@ class ModelError extends Error {
     #psqlError;
 
     constructor(config = {}) {
-        const msg = config.msg ?? 'Model Error';
+        const msg = config.msg ?? "Model Error";
         super(msg);
         this.setCode(config.code ?? 500);
         this.setMsg(msg);
@@ -56,25 +54,24 @@ class ModelError extends Error {
 
         if (psqlError) {
             const code = psqlError.code;
-            if (code === '22P02') {
+            if (code === "22P02") {
                 // Invalid input syntax for type integer: "not_a_digit"
-                appError = new AppErrorClass({ code: 400, msg: '400 Bad Request', log: false });
-            } else if (code === '23502') {
+                appError = new AppErrorClass({ code: 400, msg: "400 Bad Request", log: false });
+            } else if (code === "23502") {
                 // Null value in column "author" of relation "comments" violates not-null constraint
-                appError = new AppErrorClass({ code: 400, msg: '400 Bad Request', log: false });
-            } else if (code === '23503') {
+                appError = new AppErrorClass({ code: 400, msg: "400 Bad Request", log: false });
+            } else if (code === "23503") {
                 // Tnsert or update on table "comments" violates foreign key constraint "comments_article_id_fkey"
                 // Key (article_id)=(333) is not present in table "articles"
-                appError = new AppErrorClass({ code: 404, msg: '404 Not Found', log: false });
-            } else if (code === '22003') {
+                appError = new AppErrorClass({ code: 404, msg: "404 Not Found", log: false });
+            } else if (code === "22003") {
                 // The value is out of range for type integer
-                appError = new AppErrorClass({ code: 400, msg: '400 Bad Request', log: false });
+                appError = new AppErrorClass({ code: 400, msg: "400 Bad Request", log: false });
             } else {
                 // Unexpected error
-                appError = new AppErrorClass({ code: 500, msg: 'Unexpected Error', log: true });
+                appError = new AppErrorClass({ code: 500, msg: "Unexpected Error", log: true });
             }
         } else {
-
         }
 
         return appError;
@@ -103,8 +100,6 @@ class ModelError extends Error {
 
         this.constructor.Logger.logError(logObj);
     }
-
 }
-
 
 module.exports = ModelError;

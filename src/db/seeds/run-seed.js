@@ -5,7 +5,7 @@ const devData = require('../data/development-data/index.js');
 
 const runSeed = () => {
   const ENV = process.env.NODE_ENV;
-  if (ENV === 'development')
+  if (ENV === 'development' || ENV === 'production')
     return seed(devData).then(() => db.end());
   else if (ENV === 'test')
     return seed(testData).then(() => db.end());

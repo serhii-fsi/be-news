@@ -4,6 +4,11 @@ const request = require("supertest");
 const seed = require("../../../src/db/seeds/seed");
 const testData = require("../../../src/db/data/test-data/index");
 const AppError = require("../../../src/errors/app-error");
+const Logger = require("../../../src/loggers/logger");
+
+// Stop logging
+Logger.stopLogging();
+// Stop logging
 
 beforeEach(() => {
     return seed(testData);

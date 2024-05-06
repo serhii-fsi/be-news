@@ -1,4 +1,3 @@
-const app = require('../../app');
+const app = require("../../app");
 
-
-app.get('/api/topics', require('../../controllers/get-topics'));
+app.get("/api/topics", require("../../controllers/get-topics"));

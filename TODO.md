@@ -55,7 +55,7 @@
 - [x] Passing tests
 - [x] Some error handling improvements
 - [x] Jest auto clear console setup
-- [ ] Add a description of this endpoint
+- [x] Add a description of this endpoint
 
 
 # Task 5 - CORE: GET /api/articles
@@ -105,8 +105,7 @@
 - [x] Passing tests
 - [x] Improved error log output
 - [x] Add a description of this endpoint
-
-- [ ] In insertComment() change "RETURNING *" to  "RETURNING col1, col2, ..."
+- [x] In insertComment() change "RETURNING *" to  "RETURNING col1, col2, ..."
 
 
 # Task 8 - CORE: PATCH /api/articles/:article_id
