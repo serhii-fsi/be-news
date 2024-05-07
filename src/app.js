@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const Logger = require("./loggers/logger");
 const AppError = require("./errors/app-error");
 const ModelError = require("./models/errors/model-error");
@@ -14,6 +15,7 @@ const app = express();
 module.exports = app;
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 
 // Routes
