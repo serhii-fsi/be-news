@@ -1,5 +1,4 @@
-const endpoints = require('../routes/api-v1/endpoints.json');
-
+const endpoints = require("../routes/api-v1/endpoints.json");
 
 const getApi = async (req, res, next) => {
     try {
@@ -8,6 +7,5 @@ const getApi = async (req, res, next) => {
         next(error);
     }
 };
-
 
 module.exports = getApi;

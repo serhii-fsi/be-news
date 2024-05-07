@@ -55,7 +55,7 @@
 - [x] Passing tests
 - [x] Some error handling improvements
 - [x] Jest auto clear console setup
-- [ ] Add a description of this endpoint
+- [x] Add a description of this endpoint
 
 
 # Task 5 - CORE: GET /api/articles
@@ -105,8 +105,7 @@
 - [x] Passing tests
 - [x] Improved error log output
 - [x] Add a description of this endpoint
-
-- [ ] In insertComment() change "RETURNING *" to  "RETURNING col1, col2, ..."
+- [x] In insertComment() change "RETURNING *" to  "RETURNING col1, col2, ..."
 
 
 # Task 8 - CORE: PATCH /api/articles/:article_id
@@ -152,25 +151,7 @@
 
 
 # Task 11 - CORE: GET /api/articles (topic query)
-- Integration tests for endpoint `GET /api/articles?topic=)`
-    - [ ] Responds with comments for the 1st article with the correct prop types 
-    - [ ] Responds with 404 error when comment_id is number but does not exist 
-    - [ ] Responds with 400 error if comment_id (INT) is out of range
-    - [ ] Responds with 400 error when comment_id not a number
-
-    - [ ] Returns all comments for the 1st article with the correct prop types,
-        checks comments number
-    - [ ] Comments should be served with the most recent comments first
-    - [ ] Fields of the 2nd comment should be the same
-    - [ ] Returns an empty array for the 2nd article which doesn't have comments 
-    - [ ] Returns 404 error for incorrect but valid article_id
-    - [ ] Returns 400 error for invalid article_id 
-- Implementation
-    - [ ] Route
-    - [ ] Controller
-    - [ ] Model
-- [ ] Passing tests
-- [ ] Add a description of this endpoint
+[ ] - 
 
 
 # Bugs

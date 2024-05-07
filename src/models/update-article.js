@@ -16,8 +16,7 @@ const updateArticle = async (articleId, incVotes) => {
                     topic,
                     created_at,
                     votes,
-                    article_img_url
-            ;`,
+                    article_img_url;`,
             [articleId, incVotes]
         );
         return rows[0];

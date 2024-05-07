@@ -7,17 +7,13 @@ describe("checkByGreenList", () => {
 
         expect(checkByGreenList({ param1: "val1" }, greenList)).toBe(true);
 
-        expect(
-            checkByGreenList({ param1: "val1", param2: "val2" }, greenList)
-        ).toBe(true);
+        expect(checkByGreenList({ param1: "val1", param2: "val2" }, greenList)).toBe(true);
     });
 
     test("returns false if greenList doesn't contain all params keys", () => {
         const greenList = { param1: true };
 
-        expect(
-            checkByGreenList({ param1: "val1", param2: "val2" }, greenList)
-        ).toBe(false);
+        expect(checkByGreenList({ param1: "val1", param2: "val2" }, greenList)).toBe(false);
     });
 
     test("does not mutate the input", () => {

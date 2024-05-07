@@ -1,5 +1,4 @@
-const fetchArticles = require('../models/fetch-articles');
-
+const fetchArticles = require("../models/fetch-articles");
 
 const getArticles = async (req, res, next) => {
     try {
@@ -9,6 +8,5 @@ const getArticles = async (req, res, next) => {
         next(error);
     }
 };
-
 
 module.exports = getArticles;

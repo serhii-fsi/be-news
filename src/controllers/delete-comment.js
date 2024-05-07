@@ -1,6 +1,5 @@
-const removeComment = require('../models/remove-comment');
-const AppError = require('../errors/app-error');
-
+const removeComment = require("../models/remove-comment");
+const AppError = require("../errors/app-error");
 
 const deleteComment = async (req, res, next) => {
     try {
@@ -8,8 +7,8 @@ const deleteComment = async (req, res, next) => {
 
         const comment = await removeComment(comment_id);
 
-        if(comment === undefined) {
-            next(new AppError({ code: 404, msg: '404 Not Found' }));
+        if (comment === undefined) {
+            next(new AppError({ code: 404, msg: "404 Not Found" }));
             return;
         }
 
@@ -18,6 +17,5 @@ const deleteComment = async (req, res, next) => {
         next(error);
     }
 };
-
 
 module.exports = deleteComment;

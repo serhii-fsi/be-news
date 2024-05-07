@@ -1,5 +1,4 @@
-const fetchTopics = require('../models/fetch-topics');
-
+const fetchTopics = require("../models/fetch-topics");
 
 const getTopics = async (req, res, next) => {
     try {
@@ -9,6 +8,5 @@ const getTopics = async (req, res, next) => {
         next(error);
     }
 };
-
 
 module.exports = getTopics;

@@ -1,6 +1,5 @@
-const db = require('../db/connection');
-const ModelError = require('./errors/model-error');
-
+const db = require("../db/connection");
+const ModelError = require("./errors/model-error");
 
 const removeComment = async (commentId) => {
     try {
@@ -10,16 +9,14 @@ const removeComment = async (commentId) => {
                 WHERE
                     comment_id = $1
                 RETURNING
-                    comment_id
-            ;`,
+                    comment_id;`,
             [commentId]
         );
         return rows[0];
     } catch (error) {
-        const modelErr = new ModelError({ psql: error, msg: 'PSQL Error' });
+        const modelErr = new ModelError({ psql: error, msg: "PSQL Error" });
         throw modelErr.toAppError();
     }
 };
-
 
 module.exports = removeComment;

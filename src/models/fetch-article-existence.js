@@ -1,6 +1,5 @@
-const db = require('../db/connection');
-const ModelError = require('./errors/model-error');
-
+const db = require("../db/connection");
+const ModelError = require("./errors/model-error");
 
 const fetchArticleExistence = async (articleId) => {
     try {
@@ -13,10 +12,9 @@ const fetchArticleExistence = async (articleId) => {
         );
         return rows.length === 1;
     } catch (error) {
-        const modelErr = new ModelError({ psql: error, msg: 'PSQL Error' });
+        const modelErr = new ModelError({ psql: error, msg: "PSQL Error" });
         throw modelErr.toAppError();
     }
 };
-
 
 module.exports = fetchArticleExistence;
