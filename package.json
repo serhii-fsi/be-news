@@ -4,14 +4,14 @@
   "description": "bc-nc-news",
   "main": "listen.js",
   "scripts": {
-		"start": "node listen.js",
-		"seed-prod": "NODE_ENV=production npm run seed",
-		"seed": "node ./src/db/seeds/run-seed.js",
+    "start": "node listen.js",
+    "seed-prod": "NODE_ENV=production npm run seed",
+    "seed": "node ./src/db/seeds/run-seed.js",
     "setup-dbs": "psql -f ./src/db/setup.sql",
     "seed-dev": "NODE_ENV=development node ./src/db/seeds/run-seed.js",
     "seed-test": "NODE_ENV=test node ./src/db/seeds/run-seed.js",
     "test": "clear & NODE_ENV=test jest --runInBand",
-    "dev": "NODE_ENV=development nodemon ./src/server.js",
+    "dev": "NODE_ENV=development nodemon ./listen.js",
     "prepare": "husky install"
   },
   "repository": {
@@ -33,11 +33,12 @@
     "supertest": "^6.3.4"
   },
   "dependencies": {
-    "husky": "^8.0.2",
-    "pg-format": "^1.0.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.19.2",
-    "pg": "^8.7.3"
+    "husky": "^8.0.2",
+    "pg": "^8.7.3",
+    "pg-format": "^1.0.4"
   },
   "jest": {
     "setupFilesAfterEnv": [
