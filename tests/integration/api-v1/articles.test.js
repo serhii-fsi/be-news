@@ -19,18 +19,8 @@ afterAll(() => {
     return db.end();
 });
 
-const createError404 = () =>
-    new AppError({
-        code: 404,
-        msg: "404 Not Found",
-        log: false,
-    }).exportForClient();
-const createError400 = () =>
-    new AppError({
-        code: 400,
-        msg: "400 Bad Request",
-        log: false,
-    }).exportForClient();
+const createError404 = () => new AppError({ code: 404, msg: "404 Not Found", log: false }).exportForClient();
+const createError400 = () => new AppError({ code: 400, msg: "400 Bad Request", log: false }).exportForClient();
 
 describe("GET /api/articles/:article_id", () => {
     test("returns single article when :article_id correct and valid", () => {
@@ -175,87 +165,72 @@ describe("GET /api/articles", () => {
     });
 });
 
-describe("GET /api/articles/:article_id/comments", () => {
-    test("returns all comments for the 1st article with the correct prop types", () => {
+describe("GET /api/articles (any query)", () => {
+    test("returns 400 error for any query which is not in the green list", () => {
         return request(app)
-            .get("/api/articles/1/comments")
-            .expect(200)
-            .then(({ body: { comments } }) => {
-                expect(comments).toHaveLength(11);
-                comments.forEach((comment) => {
-                    expect(comment).toMatchObject({
-                        comment_id: expect.any(Number),
-                        votes: expect.any(Number),
-                        created_at: expect.any(String),
-                        author: expect.any(String),
-                        body: expect.any(String),
-                        article_id: expect.any(Number),
-                    });
-                });
+            .get("/api/articles?strange_key=value")
+            .expect(400)
+            .then(({ body: { error } }) => {
+                const appErr = new AppError({ code: 400, msg: "400 Bad Request", log: false });
+                expect({ error }).toMatchObject(appErr.exportForClient());
             });
     });
+});
 
-    test("comments are served with the most recent comments first", () => {
+describe("GET /api/articles (topic query)", () => {
+    test("returns 12 articles sorted by date", () => {
         return request(app)
-            .get("/api/articles/1/comments")
+            .get("/api/articles?topic=mitch")
             .expect(200)
-            .then(({ body: { comments } }) => {
-                expect(comments).toBeSorted({
+            .then(({ body: { articles } }) => {
+                expect(articles).toHaveLength(12);
+                expect(articles).toBeSorted({
                     key: "created_at",
                     descending: true,
                 });
             });
     });
 
-    test("second comment has the same props as in test data", () => {
+    test("returns articles with topic:mitch with the correct props", () => {
         return request(app)
-            .get("/api/articles/1/comments")
+            .get("/api/articles?topic=mitch")
             .expect(200)
-            .then(({ body: { comments } }) => {
-                expect(comments.find(({ comment_id }) => comment_id === 2)).toMatchObject({
-                    comment_id: 2,
-                    votes: 14,
-                    created_at: "2020-10-31T03:03:00.000Z",
-                    author: "butter_bridge",
-                    body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
-                    article_id: 1,
+            .then(({ body: { articles } }) => {
+                const getArticleFromData = (articleId) => articleData[articleId - 1];
+                const countCommentsFromData = (articleId) =>
+                    commentData.reduce((count, comment) => count + (comment.article_id === articleId ? 1 : 0), 0);
+
+                articles.forEach((article) => {
+                    const articleObj = getArticleFromData(article.article_id);
+                    expect(article).toMatchObject({
+                        article_id: expect.any(Number),
+                        author: articleObj.author,
+                        title: articleObj.title,
+                        topic: "mitch",
+                        created_at: expect.any(String),
+                        votes: articleObj.votes ?? 0,
+                        article_img_url: articleObj.article_img_url,
+                        comment_count: countCommentsFromData(article.article_id),
+                    });
                 });
             });
     });
 
-    test("returns an empty array for the 2nd article which doesn't have comments", () => {
+    test("returns empty array for ?topic which doesn't have articles", () => {
         return request(app)
-            .get("/api/articles/2/comments")
+            .get("/api/articles?topic=paper")
             .expect(200)
-            .then(({ body: { comments } }) => {
-                expect(comments).toEqual([]);
+            .then(({ body: { articles } }) => {
+                expect(articles).toEqual([]);
             });
     });
 
-    test("returns 404 error for incorrect but valid :article_id", () => {
+    test("returns 404 error for incorrect ?topic", () => {
         return request(app)
-            .get("/api/articles/333/comments")
+            .get("/api/articles?topic=valid_topic")
             .expect(404)
             .then(({ body: { error } }) => {
-                const appErr = new AppError({
-                    code: 404,
-                    msg: "404 Not Found",
-                    log: false,
-                });
-                expect({ error }).toMatchObject(appErr.exportForClient());
-            });
-    });
-
-    test("returns 400 error for invalid :article_id", () => {
-        return request(app)
-            .get("/api/articles/invalid_article_id/comments")
-            .expect(400)
-            .then(({ body: { error } }) => {
-                const appErr = new AppError({
-                    code: 400,
-                    msg: "400 Bad Request",
-                    log: false,
-                });
+                const appErr = new AppError({ code: 404, msg: "404 Topic Not Found", log: false });
                 expect({ error }).toMatchObject(appErr.exportForClient());
             });
     });

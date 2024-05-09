@@ -1,20 +1,21 @@
 const db = require("../db/connection");
 const ModelError = require("./errors/model-error");
 
-const fetchArticleExistence = async (articleId) => {
+const fetchComments = async (articleId) => {
     try {
         const { rows } = await db.query(
             `SELECT
-                article_id
-            FROM articles
-            WHERE article_id = $1;`,
+                comment_id, votes, created_at, author, body, article_id
+            FROM comments
+            WHERE article_id = $1
+            ORDER BY created_at DESC;`,
             [articleId]
         );
-        return rows.length === 1;
+        return rows;
     } catch (error) {
         const modelErr = new ModelError({ psql: error, msg: "PSQL Error" });
         throw modelErr.toAppError();
     }
 };
 
-module.exports = fetchArticleExistence;
+module.exports = fetchComments;
