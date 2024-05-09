@@ -1,17 +1,14 @@
-const fetchArticleComments = require("../models/fetch-article-comments");
-const fetchArticleExistence = require("../models/fetch-article-existence");
+const fetchComments = require("../models/fetch-comments");
+const fetchArticle = require("../models/fetch-article");
 const AppError = require("../errors/app-error");
 
 const getArticleComments = async (req, res, next) => {
     try {
         const { article_id } = req.params;
 
-        const [articleExists, comments] = await Promise.all([
-            fetchArticleExistence(article_id),
-            fetchArticleComments(article_id),
-        ]);
+        const [article, comments] = await Promise.all([fetchArticle(article_id), fetchComments(article_id)]);
 
-        if (articleExists) {
+        if (article) {
             res.status(200).send({ comments });
         } else {
             const appErr = new AppError({ code: 404, msg: "404 Not Found" });
