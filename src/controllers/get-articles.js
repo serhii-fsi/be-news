@@ -3,7 +3,7 @@ const fetchTopic = require("../models/fetch-topic");
 const checkByGreenList = require("../utils/check-by-green-list");
 const AppError = require("../errors/app-error");
 
-const greenListConfig = { topic: true };
+const greenListConfig = { topic: true, sort_by: true, order: true };
 
 const getArticles = async (req, res, next) => {
     try {
@@ -17,7 +17,7 @@ const getArticles = async (req, res, next) => {
 
         const [topic, articles] = await Promise.all([
             topicSlug ? fetchTopic(topicSlug) : Promise.resolve(false),
-            fetchArticles(topicSlug)
+            fetchArticles(topicSlug),
         ]);
 
         if (topicSlug && !topic) {
